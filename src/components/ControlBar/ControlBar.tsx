@@ -1,8 +1,10 @@
+import clsx from "clsx";
 import "./ControlBar.scss";
 
 //Types------------
 type ControlsType = {
   value: string;
+  isDisplayed: boolean;
   handleChange: React.Dispatch<
     React.SetStateAction<{
       search: string;
@@ -11,9 +13,11 @@ type ControlsType = {
     }>
   >;
 };
-function ControlBar({ value, handleChange }: ControlsType) {
+function ControlBar({ value, isDisplayed, handleChange }: ControlsType) {
   return (
-    <div className="controls">
+    <div className={clsx("controls",{
+      display_controls: isDisplayed
+    })}>
       <input
         type="text"
         value={value}

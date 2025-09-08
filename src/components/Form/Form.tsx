@@ -1,4 +1,4 @@
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm, type Resolver, type SubmitHandler } from "react-hook-form";
 import FormInput from "../FormInput/FormInput";
 import FormSelect from "../FormSelect/FormSelect";
 import "./Form.scss";
@@ -19,16 +19,29 @@ const schema = z.object({
     .min(5, "Task must be at least 5 characters")
     .max(30, "Task must be max 30 characters"),
   priority: z.string().min(1, "Select a valid priority"),
-  points: z.number().gte(1).lte(20),
+  points: z.coerce
+    .number({ message: "Please enter a valid number for story points" })
+    .min(1, "Story points must be at least 1")
+    .max(20, "Story points must be at most 20"),
+  
   assignee: z
     .string()
     .min(1, "Assignee is required")
     .regex(/^[A-Za-z\s]+$/, "Only letters and spaces allowed"),
-  date: z.date().min(today, "Date must be in the future"),
+  date: z.coerce
+    .date({ message: "Please enter a valid date" })
+    .min(today, "Date must be in the future"),
 });
 
 //Types--------------------------------
-export type FormType = z.infer<typeof schema>;
+// Define el tipo explícitamente
+export type FormType = {
+  name: string;
+  priority: string;
+  points: number;
+  assignee: string;
+  date: Date;
+};
 
 type FormProps = {
   handleAdd: React.ActionDispatch<[action: ActionType]>;
@@ -44,7 +57,7 @@ function Form({ handleAdd, handleDisplay, isDisplayed }: FormProps) {
     formState: { errors },
     reset,
   } = useForm<FormType>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as Resolver<FormType>, // Type assertion 
   });
 
   //Functions ---------------------------

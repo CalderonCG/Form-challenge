@@ -68,7 +68,8 @@ function App() {
         <button onClick={() => setShowForm(false)}>Show Tasks</button>
         <button onClick={() => setShowForm(true)}>Add task</button>
       </div>
-      <ControlBar value={parameters.search} handleChange={setParameters} />
+      <ControlBar value={parameters.search} handleChange={setParameters} 
+          isDisplayed={!showForm}/>
       <div className="app_container_todo">
         <Form
           handleAdd={dispatch}

@@ -1,6 +1,6 @@
 @use "../../styles/variables" as v;
 .controls {
-  width: 71rem;
+  width: 61rem;
   display: flex;
   gap: 0.5rem;
 
@@ -8,6 +8,7 @@
     width: 100%;
     padding: 0 1rem;
     flex-direction: column;
+    display: none;
   }
 
   &_filters{
@@ -41,4 +42,8 @@
     width: 50%;
   }
   }
+}
+
+.display_controls{
+  display: flex;
 }
