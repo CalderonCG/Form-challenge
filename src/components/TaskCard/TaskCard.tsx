@@ -17,10 +17,24 @@ function TaskCard({ task, handleToggle }: CardProps) {
           {task.name}
         </p>
         <div className="card_details">
-          <span className="card_details_priority">{task.priority}</span>
-          <p className="card_details_points">{task.points} pts</p>
-          <p className="card_details_name">{task.assignee}</p>
-          <p className="card_details_date">{task.date}</p>
+          <div className="card_details_section">
+            <p className="card_details_name" title={task.assignee}>
+              {task.assignee.slice(0, 5)}
+              {task.assignee.length > 5 ? "..." : ""}
+            </p>
+            <p className={clsx("card_details_priority",
+              {
+                urgent: task.priority === 'Urgent',
+                high: task.priority === 'High',
+                normal: task.priority === 'Normal',
+                low: task.priority === 'Low'
+              }
+            )}>{task.priority}</p>
+          </div>
+          <div className="card_details_section">
+            <p className="card_details_points">{task.points} pts</p>
+            <p className="card_details_date">{task.date}</p>
+          </div>
         </div>
       </div>
       {task.completed ? (

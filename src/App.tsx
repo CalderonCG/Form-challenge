@@ -62,24 +62,26 @@ function App() {
   }, [list]);
 
   return (
-    <>
-      <div className="app_container">
-        <h1>Task manager</h1>
-        <div className="app_container_tabs">
-          <button onClick={() => setShowForm(false)}>Show Tasks</button>
-          <button onClick={() => setShowForm(true)}>Add task</button>
-        </div>
-        <ControlBar value={parameters.search} handleChange={setParameters} />
-        <div className="app_container_todo">
-          <Form handleAdd={dispatch} isDisplayed={showForm} handleDisplay={setShowForm}/>
-          <TaskList
-            list={filteredList}
-            handleToggle={dispatch}
-            isDisplayed={!showForm}
-          />
-        </div>
+    <div className="app_container">
+      <h1>Task manager</h1>
+      <div className="app_container_tabs">
+        <button onClick={() => setShowForm(false)}>Show Tasks</button>
+        <button onClick={() => setShowForm(true)}>Add task</button>
       </div>
-    </>
+      <ControlBar value={parameters.search} handleChange={setParameters} />
+      <div className="app_container_todo">
+        <Form
+          handleAdd={dispatch}
+          isDisplayed={showForm}
+          handleDisplay={setShowForm}
+        />
+        <TaskList
+          list={filteredList}
+          handleToggle={dispatch}
+          isDisplayed={!showForm}
+        />
+      </div>
+    </div>
   );
 }
 

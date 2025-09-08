@@ -7,11 +7,16 @@ body,
   min-height: 100%;
   height: 100%;
   width: 100%;
+  overflow-y: auto;
   margin: 0;
   padding: 0;
   font-family: 'Josefin Sans', sans-serif;
   background-color: #0d0d14;
-  color: v.$FontDark
+  color: v.$FontDark;
+
+  @media (max-width: 1000px) {
+    height: auto;
+  }
 }
 
 * {

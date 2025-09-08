@@ -7,6 +7,12 @@
   @media (max-width: 1000px) {
     width: 100%;
     padding: 0 1rem;
+    flex-direction: column;
+  }
+
+  &_filters{
+    display: flex;
+    gap: 0.5rem;
   }
 
   &_search {
@@ -30,5 +36,9 @@
     color: v.$FontDark;
     background-color: v.$CardDark;
     border: none;
+
+      @media (max-width: 1000px) {
+    width: 50%;
+  }
   }
 }
