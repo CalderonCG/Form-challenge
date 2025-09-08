@@ -1,0 +1,49 @@
+@use "../../styles/variables" as v;
+.controls {
+  width: 61rem;
+  display: flex;
+  gap: 0.5rem;
+
+  @media (max-width: 1000px) {
+    width: 100%;
+    padding: 0 1rem;
+    flex-direction: column;
+    display: none;
+  }
+
+  &_filters{
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &_search {
+    outline: none;
+    flex: 1 1 auto;
+    border: 0.125rem solid gray;
+    border-radius: 0.5rem;
+    padding: 0.75rem 0.5rem;
+    font-size: 1rem;
+    color: v.$FontDark;
+    background-color: v.$CardDark;
+    border: none;
+  }
+
+  &_select {
+    outline: none;
+    border: 0.125rem solid gray;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: v.$FontDark;
+    background-color: v.$CardDark;
+    border: none;
+
+      @media (max-width: 1000px) {
+    width: 50%;
+  }
+  }
+}
+
+.display_controls{
+  display: flex;
+}
