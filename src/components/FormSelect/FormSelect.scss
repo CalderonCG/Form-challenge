@@ -1,3 +1,4 @@
+@use '../../styles/variables' as v;
 .input{
     display: flex;
     flex-direction: column;
@@ -10,6 +11,9 @@
         border-radius: 0.25rem;
         padding: 0.75rem 0.5rem;
         font-size: 1rem;
+        color: v.$FontDark;
+        background-color: v.$CardDark;
+        border: none;
     }
 
     &_label{

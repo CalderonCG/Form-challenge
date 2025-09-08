@@ -7,14 +7,19 @@ import type { ActionType, TaskType } from "./Utils/TaskTypes";
 //Types-----------------------
 type ListType = TaskType[];
 
-
 //Reducer function---------------------------
 const listReducer = (state: ListType, action: ActionType) => {
   switch (action.type) {
     case "add":
       return [...state, action.value];
+    case "toggle":
+      return state.map((task) =>
+        task.id === action.value
+          ? { ...task, completed: !task.completed }
+          : task
+      );
     default:
-      return state
+      return state;
   }
 };
 
@@ -28,10 +33,8 @@ const init = () => {
 //Component--------------------------
 function App() {
   const [list, dispatch] = useReducer(listReducer, [], init);
-  console.log(list)
+  console.log(list);
 
-
-  
   //Store changes in list in local storage
   useEffect(() => {
     localStorage.setItem("taskList", JSON.stringify(list));
@@ -40,7 +43,7 @@ function App() {
   return (
     <div className="app_container">
       <Form handleAdd={dispatch} />
-      <TaskList list={list}/>
+      <TaskList list={list} handleToggle={dispatch}/>
     </div>
   );
 }

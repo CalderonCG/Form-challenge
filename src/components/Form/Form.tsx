@@ -58,7 +58,6 @@ function Form({ handleAdd }: FormProps) {
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="form_header">Task form</h1>
       <FormInput
         {...register("name")}
         type="text"

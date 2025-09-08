@@ -1,21 +1,39 @@
-import type { TaskType } from '../../Utils/TaskTypes';
-import './TaskCard.scss'
+import { IoIosRadioButtonOff, IoIosRadioButtonOn } from "react-icons/io";
+import type { ActionType, TaskType } from "../../Utils/TaskTypes";
+import "./TaskCard.scss";
+import clsx from "clsx";
 
 //Tyoes
-type CardProps={
-  task: TaskType
-}
+type CardProps = {
+  task: TaskType;
+  handleToggle: React.ActionDispatch<[action: ActionType]>;
+};
 
-function TaskCard({task}:CardProps) {
+function TaskCard({ task, handleToggle }: CardProps) {
   return (
     <div className="card">
-      <p className="card_task">{task.name}</p>
-      <div className="card_details">
-        <span className="card_details_priority">{task.priority}</span>
-        <p className="card_details_points">{task.points} pts</p>
-        <p className="card_details_name">{task.assignee}</p>
-        <p className="card_details_date">{task.date}</p>
+      <div className="card_data">
+        <p className={clsx("card_task", { completed: task.completed })}>
+          {task.name}
+        </p>
+        <div className="card_details">
+          <span className="card_details_priority">{task.priority}</span>
+          <p className="card_details_points">{task.points} pts</p>
+          <p className="card_details_name">{task.assignee}</p>
+          <p className="card_details_date">{task.date}</p>
+        </div>
       </div>
+      {task.completed ? (
+        <IoIosRadioButtonOn
+          className="card_toggle"
+          onClick={() => handleToggle({ type: "toggle", value: task.id })}
+        />
+      ) : (
+        <IoIosRadioButtonOff
+          className="card_toggle"
+          onClick={() => handleToggle({ type: "toggle", value: task.id })}
+        />
+      )}
     </div>
   );
 }

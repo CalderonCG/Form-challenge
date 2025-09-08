@@ -1,6 +1,7 @@
 @use '../../styles/variables' as v;
 .form{
-    width: 50%;
+    width: 35rem;
+    height: 35rem;
     display: grid;
     background-color: v.$BackgroundDark;    
     padding: 1rem;
@@ -9,7 +10,7 @@
 
 
     &_button{
-        padding: 1rem;
+        padding: 0.5rem;
         background-color: v.$Primary;
         color: white;
         font-weight: 700;

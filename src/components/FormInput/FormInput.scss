@@ -1,27 +1,31 @@
-.input{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 0.5rem;
+@use "../../styles/variables" as v;
+.input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
 
-    &_field{
-        outline: none;
-        border: 0.125rem solid gray;
-        border-radius: 0.25rem;
-        padding: 0.75rem 0.5rem;
-        font-size: 1rem;
-    }
+  &_field {
+    outline: none;
+    border: 0.125rem solid gray;
+    border-radius: 0.25rem;
+    padding: 0.75rem 0.5rem;
+    font-size: 1rem;
+    color: v.$FontDark;
+    background-color: v.$CardDark;
+    border: none;
+  }
 
-    &_label{
-        font-size: 0.8rem;
-        font-weight: 700;
-    }
+  &_label {
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
 
-    &_error{
-        color: red;
-    }
+  &_error {
+    color: red;
+  }
 }
 
-.error_input{
-    border: 0.125rem solid var(--error);
+.error_input {
+  border: 0.125rem solid var(--error);
 }

@@ -1,16 +1,16 @@
-import type { TaskType } from '../../Utils/TaskTypes'
+import type { ActionType, TaskType } from '../../Utils/TaskTypes'
 import TaskCard from '../TaskCard/TaskCard'
 import './TaskList.scss'
 
 //Types---------------------
 type ListProps = {
   list: TaskType[]
+  handleToggle: React.ActionDispatch<[action: ActionType]>
 }
-function TaskList({list}: ListProps) {
+function TaskList({list, handleToggle}: ListProps) {
   return (
     <div className='list'>
-        <h1>Task List</h1>
-        {list.map(task => <TaskCard key={task.id} task={task}/>)}
+        {list.map(task => <TaskCard key={task.id} task={task} handleToggle={handleToggle}/>)}
     </div>
   )
 }
