@@ -1,0 +1,19 @@
+@use '../../styles/variables' as v;
+.form{
+    width: 50%;
+    display: grid;
+    background-color: v.$BackgroundDark;    
+    padding: 1rem;
+    border-radius: 0.5rem;
+    gap: 1rem;
+
+
+    &_button{
+        padding: 1rem;
+        background-color: v.$Primary;
+        color: white;
+        font-weight: 700;
+        border: none;
+        border-radius: 0.25rem;
+    }
+}
