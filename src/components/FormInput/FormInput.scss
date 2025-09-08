@@ -4,6 +4,7 @@
   flex-direction: column;
   width: 100%;
   gap: 0.5rem;
+  position: relative;
 
   &_field {
     outline: none;
@@ -22,7 +23,9 @@
   }
 
   &_error {
-    color: red;
+    position: absolute;
+    top: 100%;
+    color: rgb(101, 5, 5);
   }
 }
 

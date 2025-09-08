@@ -21,7 +21,7 @@ const schema = z.object({
   points: z.number().gte(1).lte(20),
   assignee: z
     .string()
-    .min(1, "Assigne is required")
+    .min(1, "Assignee is required")
     .regex(/^[A-Za-z\s]+$/, "Only letters and spaces allowed"),
   date: z.date().min(today, "Date must be in the future"),
 });

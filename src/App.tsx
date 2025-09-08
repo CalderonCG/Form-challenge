@@ -1,8 +1,9 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import "./App.scss";
 import Form from "./components/Form/Form";
 import TaskList from "./components/TaskList/TaskList";
 import type { ActionType, TaskType } from "./Utils/TaskTypes";
+import ControlBar from "./components/ControlBar/ControlBar";
 
 //Types-----------------------
 type ListType = TaskType[];
@@ -33,7 +34,23 @@ const init = () => {
 //Component--------------------------
 function App() {
   const [list, dispatch] = useReducer(listReducer, [], init);
-  console.log(list);
+  const [parameters, setParameters] = useState({
+    search: "",
+    priority: "All",
+    status: "All",
+  });
+
+  const filteredList = list.filter((task) => {
+    const statusMatch =
+      (task.completed && parameters.status === "Completed") ||
+      (!task.completed && parameters.status === "Pending") ||
+      parameters.status === "All";
+    const priorityMatch = (task.priority === parameters.priority) || parameters.priority === 'All'
+    const searchMatch = task.name
+      .toLowerCase()
+      .startsWith(parameters.search.toLowerCase());
+    return priorityMatch && searchMatch && statusMatch;
+  });
 
   //Store changes in list in local storage
   useEffect(() => {
@@ -41,10 +58,16 @@ function App() {
   }, [list]);
 
   return (
-    <div className="app_container">
-      <Form handleAdd={dispatch} />
-      <TaskList list={list} handleToggle={dispatch}/>
-    </div>
+    <>
+      <div className="app_container">
+        <h1>Task manager</h1>
+        <ControlBar value={parameters.search} handleChange={setParameters} />
+        <div className="app_container_todo">
+          <Form handleAdd={dispatch} />
+          <TaskList list={filteredList} handleToggle={dispatch} />
+        </div>
+      </div>
+    </>
   );
 }
 
