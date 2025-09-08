@@ -1,17 +1,64 @@
+import { useForm, type SubmitHandler } from "react-hook-form";
 import FormInput from "../FormInput/FormInput";
 import FormSelect from "../FormSelect/FormSelect";
 import "./Form.scss";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+//Zod schema --------------------------------------
+
+const today = new Date();
+today.setHours(0, 0, 0, 0); // cortar horas
+
+const schema = z.object({
+  name: z
+    .string()
+    .min(5, "Task must be at least 5 characters")
+    .max(30, "Task must be max 30 characters"),
+  priority: z.string().min(1, "Select a valid priority"),
+  points: z
+    .number()
+    .gte(1)
+    .lte(20),
+  assignee: z
+    .string()
+    .min(1, "Assigne is required")
+    .regex(/^[A-Za-z\s]+$/, "Only letters and spaces allowed"),
+  date: z
+    .date()
+    .min(today, "Date must be in the future"),
+});
+
+//Types--------------------------------
+export type FormType = z.infer<typeof schema>;
 
 function Form() {
+  //States--------------------------------------
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormType>({
+    resolver: zodResolver(schema),
+  });
+
+  //Functions ---------------------------
+  const onSubmit: SubmitHandler<FormType> = (data) => {
+    console.log(data);
+  };
+
   return (
-    <form className="form">
+    <form className="form" onSubmit={handleSubmit(onSubmit)}>
       <h1 className="form_header">Task form</h1>
       <FormInput
+        {...register("name")}
         type="text"
         label="Task Name"
         placeholder="Min 5 characters, max 30 characters"
+        error={errors.name?.message}
       />
       <FormSelect
+        {...register("priority")}
         label="Priority"
         options={[
           { value: "urgent", label: "Urgent" },
@@ -19,18 +66,29 @@ function Form() {
           { value: "normal", label: "Normal" },
           { value: "low", label: "Low" },
         ]}
+        error={errors.priority?.message}
       />
       <FormInput
+        {...register("points", { valueAsNumber: true })}
         type="number"
         label="Story Points"
         placeholder="Between 1 and 20"
+        error={errors.points?.message}
       />
       <FormInput
+        {...register("assignee")}
         type="text"
         label="Assignee"
         placeholder="Letter and spaces only"
+        error={errors.assignee?.message}
       />
-      <FormInput type="text" label="Due Date" placeholder="DD-MM-YYYY" />
+      <FormInput
+        {...register("date", { valueAsDate: true })}
+        type="date"
+        label="Due Date"
+        placeholder="DD-MM-YYYY"
+        error={errors.date?.message}
+      />
       <button className="form_button">Add Task</button>
     </form>
   );
