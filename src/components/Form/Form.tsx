@@ -4,6 +4,8 @@ import FormSelect from "../FormSelect/FormSelect";
 import "./Form.scss";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { ActionType, TaskType } from "../../Utils/TaskTypes";
+import { v4 as uuidv4 } from "uuid";
 
 //Zod schema --------------------------------------
 
@@ -32,19 +34,30 @@ const schema = z.object({
 //Types--------------------------------
 export type FormType = z.infer<typeof schema>;
 
-function Form() {
+type FormProps = {
+  handleAdd: React.ActionDispatch<[action: ActionType]>
+}
+
+function Form({handleAdd} : FormProps) {
   //States--------------------------------------
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<FormType>({
     resolver: zodResolver(schema),
   });
 
   //Functions ---------------------------
   const onSubmit: SubmitHandler<FormType> = (data) => {
-    console.log(data);
+    const newTask:TaskType = {
+      id: uuidv4(),
+      completed: false,
+      ...data
+    }
+    handleAdd({type: 'add', value: newTask});
+    reset()
   };
 
   return (
