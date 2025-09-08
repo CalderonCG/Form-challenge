@@ -18,46 +18,42 @@ const schema = z.object({
     .min(5, "Task must be at least 5 characters")
     .max(30, "Task must be max 30 characters"),
   priority: z.string().min(1, "Select a valid priority"),
-  points: z
-    .number()
-    .gte(1)
-    .lte(20),
+  points: z.number().gte(1).lte(20),
   assignee: z
     .string()
     .min(1, "Assigne is required")
     .regex(/^[A-Za-z\s]+$/, "Only letters and spaces allowed"),
-  date: z
-    .date()
-    .min(today, "Date must be in the future"),
+  date: z.date().min(today, "Date must be in the future"),
 });
 
 //Types--------------------------------
 export type FormType = z.infer<typeof schema>;
 
 type FormProps = {
-  handleAdd: React.ActionDispatch<[action: ActionType]>
-}
+  handleAdd: React.ActionDispatch<[action: ActionType]>;
+};
 
-function Form({handleAdd} : FormProps) {
+function Form({ handleAdd }: FormProps) {
   //States--------------------------------------
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm<FormType>({
     resolver: zodResolver(schema),
   });
 
   //Functions ---------------------------
   const onSubmit: SubmitHandler<FormType> = (data) => {
-    const newTask:TaskType = {
+    const newTask: TaskType = {
       id: uuidv4(),
       completed: false,
-      ...data
-    }
-    handleAdd({type: 'add', value: newTask});
-    reset()
+      ...data,
+      date: data.date.toLocaleDateString(),
+    };
+    handleAdd({ type: "add", value: newTask });
+    reset();
   };
 
   return (
@@ -74,10 +70,10 @@ function Form({handleAdd} : FormProps) {
         {...register("priority")}
         label="Priority"
         options={[
-          { value: "urgent", label: "Urgent" },
-          { value: "high", label: "High" },
-          { value: "normal", label: "Normal" },
-          { value: "low", label: "Low" },
+          { value: "Urgent", label: "Urgent" },
+          { value: "High", label: "High" },
+          { value: "Normal", label: "Normal" },
+          { value: "Low", label: "Low" },
         ]}
         error={errors.priority?.message}
       />

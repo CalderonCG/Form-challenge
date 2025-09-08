@@ -5,7 +5,7 @@ export type TaskType = {
   priority: string;
   points: number;
   assignee: string;
-  date: Date;
+  date: string;
   completed: boolean;
 };
 

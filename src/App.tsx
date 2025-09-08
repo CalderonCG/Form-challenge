@@ -1,14 +1,14 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import "./App.scss";
 import Form from "./components/Form/Form";
 import TaskList from "./components/TaskList/TaskList";
 import type { ActionType, TaskType } from "./Utils/TaskTypes";
 
-//Types
+//Types-----------------------
 type ListType = TaskType[];
 
 
-//Reducer function
+//Reducer function---------------------------
 const listReducer = (state: ListType, action: ActionType) => {
   switch (action.type) {
     case "add":
@@ -18,9 +18,25 @@ const listReducer = (state: ListType, action: ActionType) => {
   }
 };
 
+//Initial value of the list based on localStorage content
+const init = () => {
+  return localStorage.getItem("taskList")
+    ? JSON.parse(localStorage.getItem("taskList") || "")
+    : [];
+};
+
+//Component--------------------------
 function App() {
-  const [list, dispatch] = useReducer(listReducer, []);
+  const [list, dispatch] = useReducer(listReducer, [], init);
   console.log(list)
+
+
+  
+  //Store changes in list in local storage
+  useEffect(() => {
+    localStorage.setItem("taskList", JSON.stringify(list));
+  }, [list]);
+
   return (
     <div className="app_container">
       <Form handleAdd={dispatch} />

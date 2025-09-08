@@ -14,7 +14,7 @@ function TaskCard({task}:CardProps) {
         <span className="card_details_priority">{task.priority}</span>
         <p className="card_details_points">{task.points} pts</p>
         <p className="card_details_name">{task.assignee}</p>
-        <p className="card_details_date">{task.date.toLocaleDateString()}</p>
+        <p className="card_details_date">{task.date}</p>
       </div>
     </div>
   );
