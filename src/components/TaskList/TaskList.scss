@@ -1,0 +1,13 @@
+@use '../../styles/variables' as v;
+.list{
+    width: 50%;
+    height: 30rem;
+    display: grid;
+    background-color: v.$BackgroundDark;    
+    padding: 1rem;
+    border-radius: 0.5rem;
+    gap: 1rem;
+
+
+
+}
