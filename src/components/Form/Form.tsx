@@ -6,6 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { ActionType, TaskType } from "../../Utils/TaskTypes";
 import { v4 as uuidv4 } from "uuid";
+import clsx from "clsx";
 
 //Zod schema --------------------------------------
 
@@ -31,9 +32,11 @@ export type FormType = z.infer<typeof schema>;
 
 type FormProps = {
   handleAdd: React.ActionDispatch<[action: ActionType]>;
+  isDisplayed: boolean
+  handleDisplay:  React.Dispatch<React.SetStateAction<boolean>>
 };
 
-function Form({ handleAdd }: FormProps) {
+function Form({ handleAdd, handleDisplay, isDisplayed }: FormProps) {
   //States--------------------------------------
   const {
     register,
@@ -53,11 +56,14 @@ function Form({ handleAdd }: FormProps) {
       date: data.date.toLocaleDateString(),
     };
     handleAdd({ type: "add", value: newTask });
+    handleDisplay(false)
     reset();
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit(onSubmit)}>
+    <form className={clsx("form",{
+      display: isDisplayed
+    })} onSubmit={handleSubmit(onSubmit)}>
       <FormInput
         {...register("name")}
         type="text"

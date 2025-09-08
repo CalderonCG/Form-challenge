@@ -1,5 +1,5 @@
 @use "./styles/mixins" as m;
-
+@use "./styles/variables" as v;
 .app_container {
   @include m.flexCenter(column, center);
   width: 100%;
@@ -8,9 +8,34 @@
   position: relative;
   gap: 1rem;
 
+  &_tabs {
+    display: none;
+    gap: 0.5rem;
+
+    @media (max-width: 1000px) {
+      display: flex;
+    }
+
+    button {
+      width: 10rem;
+      padding: 0.5rem 1rem;
+      font-weight: 700;
+      background-color: v.$CardDark;
+      color: v.$FontDark;
+      outline: none;
+      border: none;
+      border-radius: 0.5rem;
+    }
+  }
 
   &_todo {
     @include m.flexCenter(row, center);
     gap: 1rem;
+    width: 100%;
+
+    @media (max-width: 1000px) {
+      flex-direction: column;
+      padding: 0 1rem;
+    }
   }
 }

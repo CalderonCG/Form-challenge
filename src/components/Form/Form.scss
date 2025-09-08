@@ -1,21 +1,32 @@
-@use '../../styles/variables' as v;
-.form{
-    width: 35rem;
-    height: 35rem;
-    display: grid;
-    background-color: v.$BackgroundDark;    
-    padding: 2rem 1rem;
-    border-radius: 0.5rem;
-    gap: 1.5rem;
+@use "../../styles/variables" as v;
+.form {
+  width: 35rem;
+  height: 35rem;
+  display: grid;
+  background-color: v.$BackgroundDark;
+  padding: 2rem 1rem;
+  border-radius: 0.5rem;
+  gap: 1.5rem;
 
+  @media (max-width: 1000px) {
+    width: 100%;
+    display: none;
+  }
 
-    &_button{
-        background-color: v.$Primary;
-        color: white;
-        font-weight: 700;
-        border: none;
-        border-radius: 0.25rem;
-        padding: 1rem;
-        height: 3rem;
-    }
+  
+
+  &_button {
+    background-color: v.$Primary;
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    height: 3rem;
+  }
+}
+
+.display{
+  display: flex;
+  flex-direction: column;
 }

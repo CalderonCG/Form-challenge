@@ -4,6 +4,11 @@
   display: flex;
   gap: 0.5rem;
 
+  @media (max-width: 1000px) {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
   &_search {
     outline: none;
     flex: 1 1 auto;

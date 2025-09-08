@@ -33,26 +33,30 @@ const init = () => {
 
 //Component--------------------------
 function App() {
+  //Const and states------------------------------
   const [list, dispatch] = useReducer(listReducer, [], init);
   const [parameters, setParameters] = useState({
     search: "",
     priority: "All",
     status: "All",
   });
+  const [showForm, setShowForm] = useState(false);
 
+  //List filtering ---------------------------
   const filteredList = list.filter((task) => {
     const statusMatch =
       (task.completed && parameters.status === "Completed") ||
       (!task.completed && parameters.status === "Pending") ||
       parameters.status === "All";
-    const priorityMatch = (task.priority === parameters.priority) || parameters.priority === 'All'
+    const priorityMatch =
+      task.priority === parameters.priority || parameters.priority === "All";
     const searchMatch = task.name
       .toLowerCase()
       .startsWith(parameters.search.toLowerCase());
     return priorityMatch && searchMatch && statusMatch;
   });
 
-  //Store changes in list in local storage
+  //Store changes in list in local storage-------------
   useEffect(() => {
     localStorage.setItem("taskList", JSON.stringify(list));
   }, [list]);
@@ -61,10 +65,18 @@ function App() {
     <>
       <div className="app_container">
         <h1>Task manager</h1>
+        <div className="app_container_tabs">
+          <button onClick={() => setShowForm(false)}>Show Tasks</button>
+          <button onClick={() => setShowForm(true)}>Add task</button>
+        </div>
         <ControlBar value={parameters.search} handleChange={setParameters} />
         <div className="app_container_todo">
-          <Form handleAdd={dispatch} />
-          <TaskList list={filteredList} handleToggle={dispatch} />
+          <Form handleAdd={dispatch} isDisplayed={showForm} handleDisplay={setShowForm}/>
+          <TaskList
+            list={filteredList}
+            handleToggle={dispatch}
+            isDisplayed={!showForm}
+          />
         </div>
       </div>
     </>
